@@ -14,6 +14,17 @@
 #include <SoftwareSerial.h>
 #include <DFPlayer_Mini_Mp3.h>
 
+#include <Adafruit_NeoPixel.h>
+
+#define PIN            D2
+
+#define NUMPIXELS      8
+
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+
+int delayval = 20; // delay for half a second
+
+
 #define RX_DF_PLAYER        12 // D6 - NodeMCU
 #define TX_DF_PLAYER        14 // D5 - NodeMCU
 
@@ -24,19 +35,24 @@ void setup () {
 	mySerial.begin (9600);
 	mp3_set_serial (mySerial);	//set softwareSerial for DFPlayer-mini mp3 module 
 	mp3_set_volume (30);
+  pixels.begin(); // This initializes the NeoPixel library.
 }
 
 
 //
 void loop () {        
 	mp3_play (1);
-	delay (90000);
+ ledR();
+	delay (10000);
+  ledG();
 	mp3_next ();
-	delay (60000);
+	delay (10000);
+  ledR();
 	mp3_prev ();
-	delay (60000);
+	delay (10000);
+  ledG();
 	mp3_play (2);
-	delay (60000);
+	delay (10000);
 }
 
 /*
@@ -60,4 +76,32 @@ void loop () {
    void mp3_DAC (boolean state); 
    void mp3_random_play (); 
  */
+
+void ledR(){
+
+  for(int i=0;i<NUMPIXELS;i++){
+
+    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
+    pixels.setPixelColor(i, pixels.Color(150,0,0)); // Moderately bright green color.
+
+    pixels.show(); // This sends the updated pixel color to the hardware.
+
+    delay(delayval); // Delay for a period of time (in milliseconds).
+
+  }
+}
+
+void ledG(){
+    for(int i=0;i<NUMPIXELS;i++){
+
+    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
+    pixels.setPixelColor(i, pixels.Color(0,150,0)); // Moderately bright green color.
+
+    pixels.show(); // This sends the updated pixel color to the hardware.
+
+    delay(delayval); // Delay for a period of time (in milliseconds).
+
+  }
+
+}
 
