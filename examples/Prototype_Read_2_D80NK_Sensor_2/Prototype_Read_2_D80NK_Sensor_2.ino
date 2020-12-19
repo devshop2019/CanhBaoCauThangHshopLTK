@@ -47,14 +47,14 @@ int lastOut, lastLastOut = 256, index;
 void loop() {
   // put your main code here, to run repeatedly:
   readState();
-  if(millis() - ttt >= 100){
+  if(millis() - ttt >= 10){
     if(lastOut != Out){
       XuLy();
       Serial.println(Out);
       lastOut = Out;
     }
   }
-  delay(50);
+//  delay(50);
 }
 
 void readState(){
@@ -71,17 +71,17 @@ void XuLy(){
     if(tempOut == -1)lastLastOut = lastLastOut << 1;
     else if (tempOut == 1)lastLastOut = lastLastOut >> 1;
 
-    Serial.print(tempOut);
-    Serial.print("\t");
-    Serial.print(lastLastOut);
-    Serial.println("=======");  
+//    Serial.print(tempOut);
+//    Serial.print("\t");
+//    Serial.print(lastLastOut);
+//    Serial.println("=======");  
   }
   
   if((digitalRead (inputA) == 1) && (digitalRead (inputB) == 1)){
-    Serial.print(lastOut);
-    Serial.print("\t");
-    Serial.print(lastLastOut);
-    Serial.print("*****");
+//    Serial.print(lastOut);
+//    Serial.print("\t");
+//    Serial.print(lastLastOut);
+//    Serial.print("*****");
     if(lastLastOut == 4096){
       Serial.println("len");
     }else if(lastLastOut == 16){
@@ -89,42 +89,5 @@ void XuLy(){
     }
     index = 0;
     lastLastOut = 256;
-  }
-}
-
-void XuLy2(){
-  int tempOut;
-  if(Out !=0){
-    tempOut = Out>0?1:2;
-    lastLastOut = (lastLastOut << index) + tempOut;
-    index++;
-    Serial.print(index);
-    Serial.print("\t");
-    Serial.print(lastLastOut);
-    Serial.println("=======");  
-  }
-  
-  if((digitalRead (inputA) == 1) && (digitalRead (inputB) == 1)){
-    Serial.print(lastOut);
-    Serial.print("\t");
-    Serial.print(lastLastOut);
-    Serial.print("*****");
-    if(lastLastOut == 210){
-      Serial.println("len");
-    }else if(lastLastOut == 105){
-      Serial.println("xuong");
-    }
-    index = 0;
-    lastLastOut = 0;
-
-//    if(lastOut == 1 && lastLastOut == 1){
-//      Serial.println("len");
-//    }else if(lastOut == -1 && lastLastOut == -1){
-//      Serial.println("xuong");
-//    }
-    
-//    if(lastOut == 1 || lastOut ==-1){
-//      lastLastOut == lastOut;  
-//    }
   }
 }
