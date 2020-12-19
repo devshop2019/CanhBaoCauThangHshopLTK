@@ -23,8 +23,9 @@ void loop() {
   readState();
   if(millis() - ttt >= 100){
     if(lastOut != Out){
-      lastOut = Out;
+      XuLy();
       Serial.println(Out);
+      lastOut = Out;
     }
   }
 }
@@ -33,4 +34,14 @@ void readState(){
   Old = New;
   New = digitalRead (inputA) * 2 + digitalRead (inputB); // Convert binary input to decimal value
   Out = QEM [Old * 4 + New];
+}
+
+void XuLy(){
+  if((digitalRead (inputA) == 1) && (digitalRead (inputB) == 1)){
+    if(lastOut == 1){
+      Serial.println("len");
+    }else if(lastOut == -1){
+      Serial.println("xuong");
+    }
+  }
 }
